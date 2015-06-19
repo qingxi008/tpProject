@@ -10,7 +10,8 @@ class GroupAuthModel extends BaseModel{
         $controllerId = null;//定义 Controller的ID
         //假设是admin用户
         //得到他的Action权限 范围
-        $authAction = M('Action')->getFieldByUserId(1);
+        $authAction = M('GroupAuth')->getFieldByUserId(1,'auth_action');
+        if(empty($authAction)) return false;
         $controllerArray = M('Action')->where(array('action_id' => array('exp',' in ('.$authAction.')'),'parent_id'=>0))->field('action_name,action_id')->select();
         foreach($controllerArray as $v){
             if(CONTROLLER_NAME == $v['action_name']){
